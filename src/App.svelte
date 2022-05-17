@@ -145,10 +145,7 @@ function createMovieContainer(movies) {
     const movieTempalte = `
               <section class="section">
                 ${movieSection(movies)}
-                </section>
-                <div class="content">
-            <p id="content-close"> close </p>
-        </div>`;
+                </section>`;
 
     movieElement.innerHTML = movieTempalte;
     return movieElement;
