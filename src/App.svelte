@@ -1,4 +1,6 @@
+
 <script>
+   
 	import Tailwindcss from './Tailwindcss.svelte';
     import Router from 'svelte-spa-router'
     import SignUp from './routes/SignUp.svelte'
@@ -61,7 +63,7 @@
                         <button on:click={signout}>Logout</button>
                         <a href="#_" class="inline-block w-full py-2 mx-0 font-medium text-left text-gray-700 md:w-auto md:px-0 md:mx-2 hover:text-indigo-600 lg:mx-3">&nbsp;&nbsp;&nbsp;&nbsp;</a>
                         
-                        <a href="/Login" class="w-full px-6 py-2 mr-0 text-gray-700 md:px-0 lg:pl-2 md:mr-4 lg:mr-5 md:w-auto">HOME</a>
+                        <a href="/Login" class="w-full px-6 py-2 mr-0 text-gray-700 md:px-0 lg:pl-2 md:mr-4 lg:mr-5 md:hidden">HOME</a>
                         </div>
                 </div>
             </div>
@@ -82,17 +84,96 @@
    <div class="flex mx-2.5 justify-center">
     <div class="mb-3 xl:w-96">
       <div class="my-10 input-group relative flex flex-wrap items-stretch w-full mb-4">
-        <input type="text" class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Search a Movie" id="inputValue">
-        <button class="btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex items-center" type="submit" id="search">
-          <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="w-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-            <path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
-          </svg>
+        <input  id="inputValue" type="text" class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Search a Movie">
+        <button type="submit" id="search" class="btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out items-center">
+          Search a Movie
         </button>
         
       </div>
     </div>
   </div>
+  <div class="section" id="movies-searchable">
+</div>
+<style>
+    .section{
+        display:flex;
+        width:100%;
+    }
+    .siz
+    {
+        width:300px;
+        margin:5px;
+        transition: 250ms all;
+    }
+    .siz:hover{
+        margin-left: 0 40px;
+        transform: scale(1.2);
+        cursor: pointer;
+    }
 
+
+</style>
+<script>
+    
+const url ='http://www.omdbapi.com/?apikey=50afd667'
+const buttonElement = document.querySelector('#search');
+const inputElement = document.querySelector('#inputValue');
+const moviesSearchable = document.querySelector('#movies-searchable');
+const movieData = document.querySelector('#movie-Data');
+
+function movieSection(movies) {
+    return movies.map((movie) => {
+      if (movie.Poster){
+        return `<img class="siz" src=${movie.Poster} data-movie-id=${movie.imdbID}/>`;
+      }
+    })
+
+}
+
+function renderSearchMovies(data) {
+    moviesSearchable.innerHTML ='';
+    const movies = data.Search;
+    const movieBlock = createMovieContainer(movies);
+    moviesSearchable.appendChild(movieBlock);
+	console.log("Data: ",movies)
+}
+
+function createMovieContainer(movies) {
+    const movieElement = document.createElement('div'); 
+    movieElement.setAttribute('class','movie');
+
+    const movieTempalte = `
+              <section class="section">
+                ${movieSection(movies)}
+                </section>
+                <div class="content">
+            <p id="content-close"> close </p>
+        </div>`;
+
+    movieElement.innerHTML = movieTempalte;
+    return movieElement;
+
+
+}
+
+
+
+buttonElement.onclick = function(event){
+    event.preventDefault();
+    const value = inputElement.value;
+
+    const newUrl = url + '&s=' + value;
+    fetch(newUrl)
+        .then((res) => res.json())
+        .then(renderSearchMovies)
+        .catch((error) => {
+            console.log('Error: ',error);
+        });
+
+        inputElement.value = '';
+        console.log('Value: ',value);
+}
+</script>
         {:else}
         <nav class="relative z-50 h-24 select-none">
             <div class="container relative flex flex-wrap items-center justify-between h-24 mx-auto overflow-hidden font-medium border-b border-gray-200 md:overflow-visible lg:justify-center sm:px-4 md:px-2">

@@ -1,33 +1,8 @@
-import App from './App.svelte';
-
-const app = new App({
-	target: document.body,
-	props: {
-		name: 'world'
-	}
-});
-
-export default app;
-
-
 const url ='http://www.omdbapi.com/?apikey=50afd667'
 const buttonElement = document.querySelector('#search');
 const inputElement = document.querySelector('#inputValue');
 const moviesSearchable = document.querySelector('#movies-searchable');
 const movieData = document.querySelector('#movie-Data');
-/*
-window.onload = function(){
-	var button = document.querySelector("#search");
-	button.addEventListener('click', handleClick);
-}
-
-buttonElement.onclick = function(event){
-	event.preventDefault();
-	const value = inputElement.value;
-	console.log("Value: ",value);
-}
-
-
 
 function movieSection(movies) {
     return movies.map((movie) => {
@@ -38,12 +13,23 @@ function movieSection(movies) {
 
 }
 
-function renderSearchMovies(data) {
-    moviesSearchable.innerHTML ='';
-    const movies = data.Search;
-    const movieBlock = createMovieContainer(movies);
-    moviesSearchable.appendChild(movieBlock);
-	console.log("Data: ",movies)
+function requestMovies(url, onComplete, onError)
+{
+    fetch(url)
+        .then((res) => res.json())
+        .then(onComplete)
+        .catch(onError);
+}
+
+function searchMovie(value)
+{
+    const newUrl = url + '&s=' + value;
+    requestMovies(newUrl,renderSearchMovies,handelError);
+}
+
+function handelError(error)
+{
+    console.log('Error: ',error);
 }
 
 function createMovieContainer(movies) {
@@ -62,6 +48,12 @@ function createMovieContainer(movies) {
 }
 
 
+function renderSearchMovies(data) {
+    moviesSearchable.innerHTML ='';
+    const movies = data.Search;
+    const movieBlock = createMovieContainer(movies);
+    moviesSearchable.appendChild(movieBlock);
+}
 
 buttonElement.onclick = function(event){
     event.preventDefault();
@@ -78,20 +70,3 @@ buttonElement.onclick = function(event){
         inputElement.value = '';
         console.log('Value: ',value);
 }
-
-
-buttonElement.onclick = function(event){
-    event.preventDefault();
-    const value = inputElement.value;
-
-    const newUrl = url + '&s=' + value;
-    fetch(newUrl)
-        .then((res) => res.json())
-        .then(renderSearchMovies)
-        .catch((error) => {
-            console.log('Error: ',error);
-        });
-
-        inputElement.value = '';
-        console.log('Value: ',value);
-} */
