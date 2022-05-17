@@ -1,4 +1,3 @@
-
 Run..    
 `npx degit sarioglu/svelte-tailwindcss-template my-project`
 this will clone the project.
@@ -59,5 +58,7 @@ here you can search the desired movie you can find their poster and you can open
 
 changes will be made to improvise the UI and adding the platform for clients to share the movie posters with each other.
 
+## Website Link
+https://movie-lib-ten.vercel.app
 
 any queries reach me @ regidigunaditya@gmail.com
