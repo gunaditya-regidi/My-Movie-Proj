@@ -115,7 +115,7 @@
 </style>
 <script>
     
-const url ='http://www.omdbapi.com/?apikey=50afd667'
+const url ='https://www.omdbapi.com/?apikey=50afd667'
 const buttonElement = document.querySelector('#search');
 const inputElement = document.querySelector('#inputValue');
 const moviesSearchable = document.querySelector('#movies-searchable');
