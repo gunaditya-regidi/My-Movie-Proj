@@ -59,6 +59,12 @@
 
                     </div>
                     <div class="flex flex-col items-start justify-end w-full pt-4 md:items-center md:w-1/3 md:flex-row md:py-0">
+                        <select id="List1">
+                            <option value="m_li">My List</option>
+                            <option value="add">+ Add New List</option>
+                            
+                          </select>
+                          <a href="#_" class="inline-block w-full py-2 mx-0 font-medium text-left text-gray-700 md:w-auto md:px-0 md:mx-2 hover:text-indigo-600 lg:mx-3">&nbsp;&nbsp;&nbsp;&nbsp;</a>
                         
                         <button on:click={signout}>Logout</button>
                         <a href="#_" class="inline-block w-full py-2 mx-0 font-medium text-left text-gray-700 md:w-auto md:px-0 md:mx-2 hover:text-indigo-600 lg:mx-3">&nbsp;&nbsp;&nbsp;&nbsp;</a>
@@ -67,7 +73,8 @@
                         </div>
                 </div>
             </div>
-            <div class="absolute right-0 flex flex-col items-center items-end justify-center w-10 h-10 bg-white rounded-full cursor-pointer md:hidden hover:bg-gray-100">
+            <div class="absolute right-0 flex flex-col items-end justify-center w-10 h-10 bg-white rounded-full cursor-pointer md:hidden hover:bg-gray-100">
+        
                 <svg class="w-6 h-6 text-gray-700" x-show="!showMenu" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor" x-cloak="">
                     <path d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
@@ -92,16 +99,29 @@
       </div>
     </div>
   </div>
-  <div class="section" id="movies-searchable">
+  
+  <div class="container section" id="movies-searchable">
+</div> 
+
+  <div class="container section" id="movies-List">
+      <h3 class="text">Your Favourite Movies List</h3>
 </div>
 <style>
+    .text{
+        position:relative;
+        margin-left:auto;
+        margin-right:auto;
+
+    }
     .section{
         display:flex;
         width:100%;
+        overflow-x:auto;
     }
     .siz
     {
-        width:300px;
+        height:auto;
+        width:150px;
         margin:5px;
         transition: 250ms all;
     }
@@ -120,6 +140,7 @@ const buttonElement = document.querySelector('#search');
 const inputElement = document.querySelector('#inputValue');
 const moviesSearchable = document.querySelector('#movies-searchable');
 const movieData = document.querySelector('#movie-Data');
+const movieLis = document.querySelector('#movies-List')
 
 function movieSection(movies) {
     return movies.map((movie) => {
@@ -136,6 +157,13 @@ function renderSearchMovies(data) {
     const movieBlock = createMovieContainer(movies);
     moviesSearchable.appendChild(movieBlock);
 	console.log("Data: ",movies)
+}
+
+function createMovieList(data){
+    moviesSearchable.innerHTML ='';
+    const moviNam = data.Title;
+    console.log('data:',moviNam);
+    
 }
 
 function createMovieContainer(movies) {
@@ -170,6 +198,27 @@ buttonElement.onclick = function(event){
         inputElement.value = '';
         console.log('Value: ',value);
 }
+/*
+document.onclick = function (event) {
+    
+    const movieId = event.target.dataset.movieId;
+    console.log('Movie Id: ', movieId);
+    const nUrl = url + '&i=' + movieId;
+    fetch(nUrl)
+        .then(createMovieList)
+        .catch((error) => {
+            console.log('Error: ',error);
+        });
+     const { tagName, id } = event.target;
+        const movieId = event.target.dataset.movieId;
+        const section = event.target.parentElement.parentElement;
+        const content = section.nextElementSibling;
+        content.classList.add('content-display');
+        getVideosByMovieId(movieId, content); 
+
+    }
+    */
+   
 </script>
         {:else}
         <nav class="relative z-50 h-24 select-none">
