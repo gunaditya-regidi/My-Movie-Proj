@@ -1,8 +1,5 @@
-Run..    
-`npx degit sarioglu/svelte-tailwindcss-template my-project`
-this will clone the project.
 
-or  else u can create new file as below instructions.
+U can create new file as below instructions.
 
 ## Creating a project
 
