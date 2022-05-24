@@ -102,7 +102,8 @@
   
   <div class="container section" id="movies-searchable">
 </div> 
-
+<div class="container section" id="movies-overlay">
+</div> 
   <div class="container section" id="movies-List">
       <h3 class="text">Your Favourite Movies List</h3>
 </div>
@@ -198,13 +199,58 @@ buttonElement.onclick = function(event){
         inputElement.value = '';
         console.log('Value: ',value);
 }
-/*
+
 document.onclick = function (event) {
+    console.log('event: ',event);
+    let movieId = event.target.dataset.movieId;
     
-    const movieId = event.target.dataset.movieId;
-    console.log('Movie Id: ', movieId);
-    const nUrl = url + '&i=' + movieId;
-    fetch(nUrl)
+    const nnn = movieId.replace("/","");
+    console.log('Movie Id: ', nnn);
+    const nUrl = url + '&i=' + nnn;
+    console.log(nUrl);
+    getapi(nUrl);
+}
+
+async function getapi(url){
+    const response = await fetch(url);
+    var data = await response.json();
+   
+    show(data);
+}
+
+
+function show(data) {
+    let ab = 
+        `<tr>
+          <th>${data.Title}</th>
+          <th>${data.Year}</th>
+          <th>${data.Rated}</th>
+          <th>${data.Released}</th>
+         </tr>`;
+    // Setting innerHTML as tab variable
+    document.getElementById("movies-overlay").innerHTML = ab;
+}
+
+/*fetch(nUrl)
+        .then((res) => res.json())
+        .then(
+            movies-List.innerHTML ='';
+            const moviNam = data.Title;
+            console.log('data:',moviNam);
+        )
+}
+  /*  fetch(nUrl)
+        .then((res) => res.json())
+        .then(
+            movies-List.innerHTML ='';
+            const moviNam = data.Title;
+            console.log('data:',moviNam);
+        )
+        .catch((error) => {
+            console.log('Error: ',error);
+        });
+}
+    /*fetch(nUrl)
         .then(createMovieList)
         .catch((error) => {
             console.log('Error: ',error);
