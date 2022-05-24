@@ -101,8 +101,10 @@
   </div>
   
   <div class="container section" id="movies-searchable">
+    
 </div> 
-<div class="container section" id="movies-overlay">
+<div id="movies-overlay">
+    <p>Close</p>
 </div> 
   <div class="container section" id="movies-List">
       <h3 class="text">Your Favourite Movies List</h3>
@@ -132,6 +134,32 @@
         cursor: pointer;
     }
 
+    .font{
+        margin-left:auto;
+        margin-right:auto;
+        color:white;
+       
+    }
+    .font2{
+        margin-left:auto;
+        margin-right:auto;
+        color:#bdfff2;
+        font-size:20px;
+    }
+    .siz1{
+        height:auto;
+        width:150px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+   .container1{
+       background-color:#363232;
+       width:80%;
+       overflow-x:auto;
+       justify-content:center;
+       margin-left:auto;
+       margin-right:auto;
+   }
 
 </style>
 <script>
@@ -201,6 +229,7 @@ buttonElement.onclick = function(event){
 }
 
 document.onclick = function (event) {
+    event.preventDefault();
     console.log('event: ',event);
     let movieId = event.target.dataset.movieId;
     
@@ -213,22 +242,30 @@ document.onclick = function (event) {
 
 async function getapi(url){
     const response = await fetch(url);
-    var data = await response.json();
-   
+    var data = await response.json();  
     show(data);
 }
 
 
 function show(data) {
     let ab = 
-        `<tr>
-          <th>${data.Title}</th>
-          <th>${data.Year}</th>
-          <th>${data.Rated}</th>
-          <th>${data.Released}</th>
-         </tr>`;
+    `<div class="container1">
+        <img class="siz1" src=${data.Poster}/>
+          <p class="font"><u class="font2">Movie Name:</u>  ${data.Title}</p><br>
+          <p class="font"><u class="font2">Runtime:</u>  ${data.Runtime}</p><br>
+          <p class="font"><u class="font2">Rated:</u>  ${data.Rated}</p><br>
+          <p class="font"><u class="font2">Date of Release:</u>  ${data.Released}</p><br>
+          <p class="font"><u class="font2">Director:</u>  ${data.Director}</p><br>
+          <p class="font"><u class="font2">Writer:</u>  ${data.Writer}</p><br>
+          <p class="font"><u class="font2">Actors:</u>  ${data.Actors}</p><br>
+          <p class="font"><u class="font2">Language:</u>  ${data.Language}</p><br>
+          <p class="font"><u class="font2">Plot:</u>  ${data.Plot}</p><br>
+          <p class="font"><u class="font2">imdb Ratings:</u>  ${data.imdbrating}</sp<br>
+          <p class="font"><u class="font2">Awards:</u>  ${data.Awards}</p><br>
+         </div>`;
     // Setting innerHTML as tab variable
     document.getElementById("movies-overlay").innerHTML = ab;
+    
 }
 
 /*fetch(nUrl)
