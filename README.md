@@ -45,7 +45,7 @@ log into vercel account and add your git repository into the website. thereby de
 
 ## login page
 
-guys I've made the login page using taiwindcss and js it's much simpler than css. simply add the classes so that large css code can be minimized.
+guys I've made the login page using tailwindcss and js it's much simpler than css. simply add the classes so that large css code can be minimized.
 
 ## movie-lib
 
